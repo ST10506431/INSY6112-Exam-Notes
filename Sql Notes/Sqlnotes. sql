@@ -1,0 +1,201 @@
+CREATE SCHEMA Artisan_Cheese;
+
+USE Artisan_Cheese;
+
+create table producer
+(
+id int auto_increment not null,
+ name varchar(20) not null,
+ primary key (id)
+);
+
+
+create table product_category
+(
+id int auto_increment not null,
+ description varchar(20) not null,
+ primary key (id)
+);
+create table product
+(
+id int auto_increment not null,
+ description varchar(20) not null,
+ producer_id int not null,
+ category_id int not null,
+ primary key (id),
+ foreign key (producer_id) references producer(id),
+foreign key (category_id) references product_category(id)
+);
+
+
+Alter table racetrack
+add column countru varchar(50) not null;
+
+Alter table racetrack
+change  column countru  country  varchar(50) not null;
+
+Alter table racetrack
+drop  column   country;
+
+
+drop table racetrack;
+drop schema formula1;
+
+insert into product (producer_id, category_id, description) values (2,3,'Royal Blue') , (2,2,'Soft Melt'), (1,2,'Hard Chedar');
+
+update producer
+set name = 'Lovely Cheese'
+where id = 1;
+
+delete
+from product_size
+where id = 8;
+
+
+Start transaction;
+
+delete
+from product_size
+where id = 8;
+delete
+from product_size
+where id = 9;
+
+--Commit;
+Rollback;
+
+Select r.name as racename, r.date as racedate
+from race r;
+
+
+select * 
+from race 
+where name like 'A%';
+
+
+select * 
+from race 
+where name is null;
+
+
+select * 
+from race 
+where id in (2,3);
+
+ select *
+ from team 
+ where exists (
+    select *
+    from entry where entry.team_id = team.team_id
+ );
+
+
+
+select *
+from race where date >= "2019-06-01";
+
+
+
+select *
+from race where date beteen "2019-06-01" amd "2019-06-30";
+
+select distinct(location)
+from race ;
+
+select * from team order by name asc;
+
+
+select race.name as racename, racetrack.name as racetrackfrom racetrace
+From racetrack,race
+where race.racetrack_id = racetrack.racetrack_id;
+
+
+
+
+
+select r.name as racename, rt.name as racetrackfrom racetrace
+From racetrack rt
+join race r on rt.racetrack_id = r.racetrack_id;
+
+
+
+select r.name as racename, rt.name as racetrackfrom racetrace
+From racetrack rt
+left join race r on rt.racetrack_id = r.racetrack_id;
+
+
+select r.name as racename, rt.name as racetrackfrom racetrace
+From racetrack rt
+right join race r on rt.racetrack_id = r.racetrack_id;
+
+
+
+select r.name as racename, rt.name as racetrackfrom racetrace
+From racetrack rt
+left join race r on rt.racetrack_id = r.racetrack_id;
+union
+select r.name as racename, rt.name as racetrackfrom racetrace
+From racetrack rt
+right join race r on rt.racetrack_id = r.racetrack_id;
+
+
+select count(*) , location
+from race
+group by loaction;
+
+--AVG()
+--MAX()
+--MIN()
+--STDDEV()
+--SUM()
+
+
+select count(*) , location
+from race
+group by loaction
+having count(*)  > 10;
+
+
+create index racetrack_city
+on racetrack (city);
+
+
+create or replace view races_withracetracks as
+select *
+from qqqqqaqq;
+
+create  temporary table producer
+(
+id int auto_increment not null,
+ name varchar(20) not null,
+ primary key (id)
+) engine = memory;
+
+
+DELIMITER;
+create procedure addrace
+(
+    in racename varchar(250),
+    In racedate date,
+    in racetracname varchar(250)
+)
+begin
+
+declare racetrack_id_to_insert INT;
+
+select racetrack_id
+into racetrack_id_to_insert
+from racetrack
+where name = racetracname;
+
+insert into race (racetrack_id, name, date)
+values ( racetrack_id_to_insert, racename, racedate)
+
+end
+
+DELIMITER;
+
+
+Call addrace(
+    "new race" ,"2020-08-02","Circuit de monaco"
+);
