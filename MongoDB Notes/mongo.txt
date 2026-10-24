@@ -10,3 +10,22 @@ show dbs
 Create db named shop and insert
 use Shop
 db.UserProfiles.insertOne({name: "John Smith", email: "john@email.com", age: 25, city: "Durban"})
+
+
+select all
+db.UserProfiles.find()
+
+Query with greater than 
+db.UserProfiles.find({age: {$gt: 25}})
+
+Less than
+db.UserProfiles.find({age: {$lt: 30}})
+
+Dates 
+db.orders.insertOne({ orderDate: new Date("2026-10-24T12:00:00") })
+
+Delete
+db.users.deleteOne({age:37})
+
+Update
+db.clients.updateOne({client_name: "Debbie"}, {$set: {client_dob: new Date("1980-03-17") }})

@@ -1,0 +1,11 @@
+4,1:  use clients_ST10506431
+
+4.2:
+db.clients.insertOne({client_name: "Debbie", client_surname: "Theart",client_dob: new Date("1980-03-17")})
+clients_ST10506431> db.clients.insertOne({client_name: "Thomas", client_surname: "Duncan",client_dob: new Date("1976-08-12")})
+
+4.3:
+db.clients.find()
+
+4.4:
+db.clients.find({client_dob : {$gt: new Date("1979-01-12")}})
