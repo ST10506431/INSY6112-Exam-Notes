@@ -1,0 +1,81 @@
+CREATE SCHEMA 2025_passpaper;
+
+USE 2025_passpaper;
+
+create table student
+(
+studentID int auto_increment not null,
+student_name varchar(20) not null,
+student_surname varchar(20) not null,
+student_number varchar(6) not null,
+primary key (studentID)
+);
+desc student;
+
+create table lecturer
+(
+lecturerID int auto_increment not null,
+lecturer_name varchar(20) not null,
+lecturer_surname varchar(20) not null,
+primary key (lecturerID)
+);
+
+
+create table tutorial
+(
+TutorialID int auto_increment not null,
+studentID int not null,
+lecturerID int not null,
+tutorialDate Date not null,
+tutorialDate Time not null,
+TutorialDuration int not null,
+primary key (TutorialID),
+foreign key (studentID) references student(studentID),
+foreign key (lecturerID) references lecturer(lecturerID)
+);
+
+desc tutorial;
+
+insert into student
+(student_name, student_surname, student_number)
+values 
+('Debbie','Theart', '123456'),
+('Thomas', 'Duncan' ,'654321');
+
+
+select * from student;
+
+insert into lecturer
+(lecturer_name, lecturer_surname)
+values 
+('Zintle','Nukani'),
+('Ravi', 'Maharaj');
+
+select * from lecturer;
+
+insert into tutorial
+(tutorialDate, tutorialTime, TutorialDuration, lecturerID, studentID)
+values 
+("2025-01-15", "9:00", 180, 2, 1),
+("2025-01-18", "15:00", 240, 2, 2),
+("2025-01-20", "10:00", 180, 1, 1),
+("2025-01-21", "11:00", 180, 2, 1);
+
+select * from tutorial;
+
+Select s.student_name, s.student_surname , count(t.TutorialID)
+from student s 
+left join tutorial t on s.studentID = t.studentID
+group by s.student_name, s.student_surname;
+
+
+create or replace view student_booked_with_lecturer_2 as
+select distinct s.student_name, s.student_surname
+from student s
+join tutorial t on s.studentID = t.studentID
+where t.lecturerID = 2
+order by s.student_surname asc;
+
+
+select *
+from student_booked_with_lecturer_2;
