@@ -1,0 +1,12 @@
+Open cmd in:
+C:\Program Files\MongoDB\Server\8.3\bin
+
+In CMD:
+mongosh
+
+Show list of databases:
+show dbs
+
+Create db named shop and insert
+use Shop
+db.UserProfiles.insertOne({name: "John Smith", email: "john@email.com", age: 25, city: "Durban"})
